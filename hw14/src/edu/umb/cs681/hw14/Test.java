@@ -11,13 +11,17 @@ public class Test {
 			Thread t1 = new Thread(withdrawRunnable);
 			Thread t2 = new Thread(depositRunnable);
 			t1.start();
-			t2.start();
 			withdrawRunnable.setDone();
-			depositRunnable.setDone();
 			t1.interrupt();
-			t2.interrupt();
 			try {
 				t1.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			t2.start();
+			depositRunnable.setDone();
+			t2.interrupt();
+			try {
 				t2.join();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -27,3 +31,4 @@ public class Test {
 	}
 
 }
+
